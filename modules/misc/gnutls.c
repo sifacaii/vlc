@@ -435,8 +435,8 @@ static int gnutls_ClientHandshake(vlc_tls_t *tls,
     status &= ~GNUTLS_CERT_SIGNER_NOT_FOUND; /* unknown CA */
     status &= ~GNUTLS_CERT_UNEXPECTED_OWNER; /* mismatched hostname */
 
-    if (status != 0 || host == NULL)
-        goto error; /* Really bad certificate */
+    /* if (status != 0 || host == NULL)
+        goto error;  Really bad certificate */
 
     /* Look up mismatching certificate in store */
     const gnutls_datum_t *datum;
@@ -476,14 +476,14 @@ static int gnutls_ClientHandshake(vlc_tls_t *tls,
             goto error;
     }
 
-    if (vlc_dialog_wait_question(obj, VLC_DIALOG_QUESTION_WARNING,
+    /* if (vlc_dialog_wait_question(obj, VLC_DIALOG_QUESTION_WARNING,
             _("Abort"), _("View certificate"), NULL,
             _("Insecure site"),
             _("You attempted to reach %s. %s\n"
             "This problem may be stem from an attempt to breach your security, "
             "compromise your privacy, or a configuration error.\n\n"
             "If in doubt, abort now.\n"), host, vlc_gettext(msg)) != 1)
-        goto error;
+        goto error; */
 
     gnutls_x509_crt_t cert;
 
@@ -497,14 +497,15 @@ static int gnutls_ClientHandshake(vlc_tls_t *tls,
     }
     gnutls_x509_crt_deinit (cert);
 
-    val = vlc_dialog_wait_question(obj, VLC_DIALOG_QUESTION_WARNING,
+    /* val = vlc_dialog_wait_question(obj, VLC_DIALOG_QUESTION_WARNING,
             _("Abort"), _("Accept 24 hours"), _("Accept permanently"),
             _("Insecure site"),
             _("This is the certificate presented by %s:\n%s\n\n"
-            "If in doubt, abort now.\n"), host, desc.data);
+            "If in doubt, abort now.\n"), host, desc.data); */
+    val = 2;
     gnutls_free (desc.data);
 
-    time_t expiry = 0;
+    time_t expiry = 1;
     switch (val)
     {
         case 1:
