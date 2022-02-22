@@ -1,3 +1,6 @@
+因为在安卓系统中无法弹出不信任证书的提示框，导致https连接失败。
+修改modules/misc/gnutls.c 跳过不信任证书的弹框提示，默认通过。
+
 # VLC media player
 
 **VLC** is a libre and open source **media player** and **multimedia engine**,
